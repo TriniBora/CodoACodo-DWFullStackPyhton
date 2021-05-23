@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+
+    <!-- ----------------BOOTSTRAP---------------- -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- ----------------STYLES---------------- -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- ----------------FONTS---------------- -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <!-- ----------------ICONS---------------- -->
+    <script src="https://kit.fontawesome.com/ede2c634b2.js" crossorigin="anonymous"></script>
+
+    <!-- ----------------ANIMATIONS---------------- -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+</head>
+
+<body>
+    <!-- Maquetado del body: flexbox, con tres elementos: header, main (cuerpo principal de la página) y footer-->
+
+    <div class="flex-container-body">
+        <header class="head">
+            <!-- En el header están el vínculo a Home y el menú de navegación que contiene los vínculos a las demás páginas del sitio: About, Portfolio, Services y Contact. -->
+            <a href="index.html"><i class="fas fa-home fa-lg" Sid="icon-home"></i></a>
+            <nav>
+                <ul class="flex-container-list">
+                    <li><a href="about.html">About</a>
+                    </li>
+                    <li><a href="portfolio.html">Portfolio</a>
+                    </li>
+                    <li><a href="services.html">Services</a>
+                    </li>
+                    <li><a href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="main-section">
+                <!--Sección principal de la página, maquetada con Grid. Luego cada página tiene sus particularidades, por ello cada ítem grid de la sección principal es un contenedor flexbox. -->
+                <div class="grid-container-portfolio main-container">
+                    <div class="grid-item-portfolio flex-container-column">
+                        <p>Juan Torrissi Ilustrator's portfolio.</p>
+                        <img src="img/torrissi.png" alt="Juan Torrissi Ilustraciones">
+                    </div>
+                    <div class="grid-item-portfolio flex-container-column">
+                        <p>"La Bonita Casa de Descanso", website.</p>
+                        <img src="img/casadescanso.png" alt="La Finita Casa Descanso">
+                    </div>
+                    <div class="grid-item-special-portfolio flex-container-column bg-border">
+                        <h2>My portfolio.</h2>
+                        <h3>There are some of my work. <br>To know more about it, visit my social media sites. </h3>
+                    </div>
+
+                    <div class="grid-item-portfolio flex-container-column">
+                        <p>"El Deck Tejidos", Brand identity.</p>
+                        <img src="img/logo.jpg" alt="El Deck Tejidos">
+                    </div>
+                    <div class="grid-item-portfolio flex-container-column">
+                        <p>Irrational Numbers, 4th year HighSchool.</p>
+                        <div class='embed-container' data-page-width='500' data-page-height='281' id='ypembedcontainer' id="portfolio-maths"><iframe src="https://www.yumpu.com/es/embed/view/N2WDJLfmplUsPRBQ" frameborder="0" allowfullscreen="true" allowtransparency="true"></iframe><br><a href="https://www.yumpu.com/es/document/view/65630250/numeros-irracionales" title="NÚMEROS IRRACIONALES"
+                                target="_blank">NÚMEROS IRRACIONALES</a></div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <section class="foot">
+                <!-- Pie de página, con el diseñador del sitio y los enlaces a las redes sociales (a modo de ejemplo, son enlaces en blanco) -->
+                <h6>Design by MTB 2021</h6>
+                <ul class="flex-container-list">
+                    <li><a href="http://" target="_blank"><i class="fab fa-instagram"></i></a></i>
+                    </li>
+                    <li><a href="http://" target="_blank"><i class="fab fa-telegram"></i></a></i>
+                    </li>
+                    <li><a href="http://" target="_blank"><i class="fab fa-discord"></a></i>
+                    </li>
+                    <li><a href="http://" target="_blank"><i class="fab fa-github"></a></i>
+                    </li>
+                </ul>
+            </section>
+        </footer>
+    </div>
+
+    <!-- ----------------SCRIPTS---------------- -->
+
+    <!-- ----------------BOOTSTRAP---------------- -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+
+    <!-- ----------------IFRAME---------------- -->
+    <script src='https://players.yumpu.com/modules/embed/yp_r_iframe.js'></script>
+
+</body>
+
+</html>
