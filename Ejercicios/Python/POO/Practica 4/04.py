@@ -1,4 +1,3 @@
-
 def dividir(num1, num2):
     try:
         cociente = num1 / num2
