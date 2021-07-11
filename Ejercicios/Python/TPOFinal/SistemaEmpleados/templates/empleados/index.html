@@ -1,41 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+{% include 'header.html' %}
+<p><a href="{{url_for('create')}}" class="btn btn-success">Ingresar nuevo empleado</a></p>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <title>Document</title>
-</head>
+<table class="table table-light">
+    <thead class="thead-light">
+        <tr>
+            <th>#</th>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for empleado in empleados %}
+        <tr>
+            <td>{{empleado[0]}}</td>
+            <!--id-->
+            <td> <img class="thmbnail" width="100" src="uploads/{{empleado[3]}}" alt=""></td>
+            <!--foto-->
+            <td>{{empleado[1]}}</td>
+            <!--nombre-->
+            <td>{{empleado[2]}}</td>
+            <!--correo-->
+            <td><a class="btn btn-warning" href="/edit/{{empleado[0]}}">Editar</a>
+                <a class="btn btn-danger" oclick="return confirm('¿Desea borrar al empleado?')" href="/destroy/{{empleado[0]}}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-<body>
-    <h1>Hola Flask</h1>
-    <table class="table table-light">
-        <thead class="thead-light">
-            <tr>
-                <th>#</th>
-                <th>Foto</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for empleado in empleados %}
-            <tr>
-                <td>{{empleado[0]}}</td>
-                <!--id-->
-                <td>{{empleado[3]}}</td>
-                <!--foto-->
-                <td>{{empleado[1]}}</td>
-                <!--nombre-->
-                <td>{{empleado[2]}}</td>
-                <!--correo-->
-                <td>Editar | Borrar</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-
-</html>
+{% include 'footer.html' %}
