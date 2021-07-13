@@ -30,63 +30,6 @@ def create():
     return render_template('empleados/create.html')
 
 
-@app.route('/update', methods=['POST'])
-def update():
-    _nombre = request.form['txtNombre']
-    _correo = request.form['txtCorreo']
-    _foto = request.files['txtFoto']
-    id = request.form['txtID']
-
-    sql = "UPDATE `sistema`.`empleados` SET nombre=%s, correo=%s WHERE id=%s;"
-    datos = (_nombre, _correo, id)
-
-    now = datetime.now()
-    tiempo = now.strftime("%Y%H%M%S")
-
-    if _foto.filename != '':
-        nuevoNombreFoto = tiempo + _foto.filename
-        _foto.save("uploads/" + nuevoNombreFoto)
-
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute(sql, datos)
-
-    cursor.execute("SELECT foto FROM `sistema`.`empleados` WHERE id=%s", id)
-    fila = cursor.fetchall()
-    os.remove(os.path.join(app.config['CARPETA'], fila[0][0]))
-    cursor.execute("UPDATE `sistema`.`empleados` SET foto=%s WHERE id=%s",(nuevoNombreFoto, id))
-
-
-    conn.commit()
-
-    return redirect('/')
-
-
-@app.route('/edit/<int:id>')
-def edit(id):
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM `sistema`.`empleados` WHERE id=%s", (id))
-    empleados = cursor.fetchall()
-    conn.commit()
-    return render_template('empleados/edit.html', empleados=empleados)
-
-
-@app.route('/destroy/<int:id>')
-def destroy(id):
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute("SELECT foto FROM `sistema`.`empleados` WHERE id=%s", id)
-    fila = cursor.fetchall()
-    os.remove(os.path.join(app.config['CARPETA'], fila[0][0]))
-    cursor.execute('DELETE FROM `sistema`.`empleados` WHERE id=%s', (id))
-    conn.commit()
-    return redirect('/')
-
-@app.route('/uploads/<nombreFoto>')
-def uploads(nombreFoto):
-    return send_from_directory(app.config['CARPETA'], nombreFoto)
-
 # cuando el usuario escriba / se va a buscar el archivo index.html
 @app.route('/')
 def index():
@@ -127,6 +70,63 @@ def storage():
     cursor.execute(sql, datos)
     conn.commit()
     return redirect('/')
+
+
+@app.route('/destroy/<int:id>')
+def destroy(id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT foto FROM `sistema`.`empleados` WHERE id=%s", id)
+    fila = cursor.fetchall()
+    os.remove(os.path.join(app.config['CARPETA'], fila[0][0]))
+    cursor.execute('DELETE FROM `sistema`.`empleados` WHERE id=%s', (id))
+    conn.commit()
+    return redirect('/')
+
+
+@app.route('/edit/<int:id>')
+def edit(id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM `sistema`.`empleados` WHERE id=%s", (id))
+    empleados = cursor.fetchall()
+    conn.commit()
+    return render_template('empleados/edit.html', empleados=empleados)
+
+
+@app.route('/update', methods=['POST'])
+def update():
+    _nombre = request.form['txtNombre']
+    _correo = request.form['txtCorreo']
+    _foto = request.files['txtFoto']
+    id = request.form['txtID']
+
+    sql = "UPDATE `sistema`.`empleados` SET nombre=%s, correo=%s WHERE id=%s"
+    datos = (_nombre, _correo, id)
+
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(sql, datos)
+
+    now = datetime.now()
+    tiempo = now.strftime("%Y%H%M%S")
+
+    if _foto.filename != '':
+        nuevoNombreFoto = tiempo + _foto.filename
+        _foto.save("uploads/" + nuevoNombreFoto)
+
+    cursor.execute("SELECT foto FROM `sistema`.`empleados` WHERE id=%s", id)
+    fila = cursor.fetchall()
+    os.remove(os.path.join(app.config['CARPETA'], fila[0][0]))
+    cursor.execute("UPDATE `sistema`.`empleados` SET foto=%s WHERE id=%s",(nuevoNombreFoto, id))
+
+    conn.commit()
+    return redirect('/')
+
+
+@app.route('/uploads/<nombreFoto>')
+def uploads(nombreFoto):
+    return send_from_directory(app.config['CARPETA'], nombreFoto)
 
 
 if __name__ == '__main__':    # para que python pueda interpretar  como
