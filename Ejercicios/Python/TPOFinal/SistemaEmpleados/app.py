@@ -20,9 +20,13 @@ app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_Db'] = 'sistema'
 mysql.init_app(app)
 
-
 CARPETA = os.path.join('uploads')
 app.config['CARPETA'] = CARPETA
+
+
+@app.route('/uploads/<nombreFoto>')
+def uploads(nombreFoto):
+    return send_from_directory(app.config['CARPETA'], nombreFoto)
 
 
 @app.route('/create')
@@ -74,21 +78,25 @@ def storage():
 
 @app.route('/destroy/<int:id>')
 def destroy(id):
+    sql = "DELETE FROM `sistema`.`empleados` WHERE id=%s;"
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT foto FROM `sistema`.`empleados` WHERE id=%s", id)
+
+    cursor.execute("SELECT foto FROM `sistema`.`empleados` WHERE id=%s", (id))
     fila = cursor.fetchall()
     os.remove(os.path.join(app.config['CARPETA'], fila[0][0]))
-    cursor.execute('DELETE FROM `sistema`.`empleados` WHERE id=%s', (id))
+
+    cursor.execute(sql, (id))
     conn.commit()
     return redirect('/')
 
 
 @app.route('/edit/<int:id>')
 def edit(id):
+    sql = "SELECT * FROM `sistema`.`empleados` WHERE id=%s;"
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM `sistema`.`empleados` WHERE id=%s", (id))
+    cursor.execute(sql, (id))
     empleados = cursor.fetchall()
     conn.commit()
     return render_template('empleados/edit.html', empleados=empleados)
@@ -101,7 +109,7 @@ def update():
     _foto = request.files['txtFoto']
     id = request.form['txtID']
 
-    sql = "UPDATE `sistema`.`empleados` SET nombre=%s, correo=%s WHERE id=%s"
+    sql = "UPDATE `sistema`.`empleados` SET nombre=%s, correo=%s WHERE id=%s;"
     datos = (_nombre, _correo, id)
 
     conn = mysql.connect()
@@ -115,18 +123,16 @@ def update():
         nuevoNombreFoto = tiempo + _foto.filename
         _foto.save("uploads/" + nuevoNombreFoto)
 
-    cursor.execute("SELECT foto FROM `sistema`.`empleados` WHERE id=%s", id)
-    fila = cursor.fetchall()
-    os.remove(os.path.join(app.config['CARPETA'], fila[0][0]))
-    cursor.execute("UPDATE `sistema`.`empleados` SET foto=%s WHERE id=%s",(nuevoNombreFoto, id))
+        cursor.execute("SELECT foto FROM `sistema`.`empleados` WHERE id=%s;", (id))
+        fila = cursor.fetchall()
+        os.remove(os.path.join(app.config['CARPETA'], fila[0][0]))
+        cursor.execute("UPDATE `sistema`.`empleados` SET foto=%s WHERE id=%s;", (nuevoNombreFoto, id))
 
     conn.commit()
     return redirect('/')
 
 
-@app.route('/uploads/<nombreFoto>')
-def uploads(nombreFoto):
-    return send_from_directory(app.config['CARPETA'], nombreFoto)
+
 
 
 if __name__ == '__main__':    # para que python pueda interpretar  como
